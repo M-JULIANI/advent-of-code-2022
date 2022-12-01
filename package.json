@@ -5,6 +5,10 @@
   "author": "Marco Juliani <marco@outerlabs.io>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.11.10"
+    "@types/node": "^18.11.10",
+    "typescript": "^4.9.3"
+  },
+  "scripts": {
+    "dev": "yarn run tsc && node index.js"
   }
 }

@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -45,14 +49,19 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 exports.identifyHighestCalorieCount = void 0;
 var fs = __importStar(require("fs"));
-exports.identifyHighestCalorieCount = function (filePath) {
+var identifyHighestCalorieCount = function (filePath) {
     var e_1, _a;
     //console.log('starting here')
     var flatArray = fs.readFileSync(filePath).toString().split("\n");
@@ -66,7 +75,7 @@ exports.identifyHighestCalorieCount = function (filePath) {
             //console.log('line: ' + line)
             if (line.length === 0) {
                 elfCalories.set(elfIndex, partialCount);
-                console.log("elf " + elfIndex + ": " + partialCount);
+                console.log("elf ".concat(elfIndex, ": ").concat(partialCount));
                 partialCount = 0;
                 elfIndex++;
                 continue;
@@ -82,14 +91,15 @@ exports.identifyHighestCalorieCount = function (filePath) {
         }
         finally { if (e_1) throw e_1.error; }
     }
-    var largest = __spread(elfCalories.values()).sort(function (a, b) { return b - a; })[0];
-    console.log("largest: " + largest);
-    var threeLargest = __spread(elfCalories.values()).sort(function (a, b) { return b - a; }).slice(0, 3);
+    var largest = __spreadArray([], __read(elfCalories.values()), false).sort(function (a, b) { return b - a; })[0];
+    console.log("largest: ".concat(largest));
+    var threeLargest = __spreadArray([], __read(elfCalories.values()), false).sort(function (a, b) { return b - a; }).slice(0, 3);
     console.log('three largest');
     threeLargest.forEach(function (x) { return console.log(x); });
     var threeLargestSum = threeLargest.reduce(function (accumulator, currentValue) { return accumulator + currentValue; }, 0);
     console.log('sum of three largest: ' + threeLargestSum);
-    var smallest = __spread(elfCalories.values()).sort(function (a, b) { return a - b; })[0];
-    console.log("smallest: " + smallest);
+    var smallest = __spreadArray([], __read(elfCalories.values()), false).sort(function (a, b) { return a - b; })[0];
+    console.log("smallest: ".concat(smallest));
     return [largest, threeLargestSum];
 };
+exports.identifyHighestCalorieCount = identifyHighestCalorieCount;

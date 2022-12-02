@@ -64,11 +64,11 @@ const computeRequiredInstrumentToAchieveOutcome = (roundInfo: string):number => 
     const opponentInstrumentValue = InstrumentToValue[round[0]]
     const desiredOutcome = Outcomes[round[1]]
     let opponentValueIndex0 = opponentInstrumentValue - 1
-    let myInstrumentValue = 0
+    let myInstrumentValue: number = 0
     
     //loss
     if(desiredOutcome === 0){
-       myInstrumentValue = (opponentValueIndex0 - 2) % 2
+       myInstrumentValue = opponentValueIndex0 === 0 ? 2 : opponentValueIndex0 -1
     }
     //tie
     else if (desiredOutcome === 3)
@@ -76,10 +76,10 @@ const computeRequiredInstrumentToAchieveOutcome = (roundInfo: string):number => 
         myInstrumentValue = opponentValueIndex0
     }
     else if(desiredOutcome === 6){
-        myInstrumentValue = (opponentValueIndex0 + 2) % 2
+        myInstrumentValue = (opponentValueIndex0+ 1 + 3) % 3
     }
 
-   // myInstrumentValue +=1;
+    myInstrumentValue +=1;
     return myInstrumentValue
 }
 
@@ -92,8 +92,9 @@ export const computeTotalScorePart2 = (filePath: string): number => {
     for (let line of flatArray) {
         let requireOutcome = computeRound(line);
         let requiredInstrument = computeRequiredInstrumentToAchieveOutcome(line)
+        //actual round score
         let roundScore = computeRound(line, requiredInstrument);
-        console.log(`round ${round}, requiredOutcome: ${requireOutcome[1]},  score: ` + roundScore[0] +  `, my instrument ${roundScore[1]}, ` + `, opponent instrument: ${roundScore[2]}`)
+        console.log(`round ${round}, requiredOutcome: ${requireOutcome[1]},  score: ` + roundScore[0] +  `, my instrument ${requiredInstrument}` + `, opponent instrument: ${roundScore[2]}`)
         totalscore += roundScore[0];
         round++;
     }

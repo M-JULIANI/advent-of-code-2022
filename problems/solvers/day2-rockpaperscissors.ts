@@ -41,6 +41,7 @@ const computeRound = (roundInfo: string, myInstrument: number | null = null): [n
 }
 
 
+//part 1
 export const computeTotalScore = (filePath: string): number => {
 
     var flatArray = fs.readFileSync(filePath).toString().split("\n");
@@ -83,6 +84,7 @@ const computeRequiredInstrumentToAchieveOutcome = (roundInfo: string):number => 
     return myInstrumentValue
 }
 
+//part 2
 export const computeTotalScorePart2 = (filePath: string): number => {
 
     var flatArray = fs.readFileSync(filePath).toString().split("\n");
@@ -99,7 +101,5 @@ export const computeTotalScorePart2 = (filePath: string): number => {
         round++;
     }
        console.log('TOTALSCORE: ' + totalscore)
-     
-
     return totalscore;
 }

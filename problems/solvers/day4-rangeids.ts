@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import { stringify } from 'querystring';
 
 
 export const getRangeCountOfFullyContainedRanges = (filePath: string) =>{

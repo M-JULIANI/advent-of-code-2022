@@ -9,7 +9,6 @@ export const pt1Pt2 = (filePath: string): [number,number]=>{
    for(let line of flatArray){
     if(line.length ===0) {
         elfCalories.set(elfIndex, partialCount);
-        console.log(`elf ${elfIndex}: ${partialCount}`);
         partialCount = 0;
         elfIndex++
         continue
@@ -18,14 +17,8 @@ export const pt1Pt2 = (filePath: string): [number,number]=>{
     partialCount+= lineCalories;
    }
 
-   let largest  =  [...elfCalories.values()].sort((a,b)=> b-a)[0];
-   console.log(`largest: ${largest}`)
-   let threeLargest = [...elfCalories.values()].sort((a,b)=> b-a).slice(0, 3);
-   console.log('three largest');
-   threeLargest.forEach(x=> console.log(x));
-   let threeLargestSum = threeLargest.reduce((accumulator, currentValue) => accumulator + currentValue,0);
-   console.log('sum of three largest: ' + threeLargestSum)
-   let smallest  =  [...elfCalories.values()].sort((a,b)=> a-b)[0];
-   console.log(`smallest: ${smallest}`)
+   const largest  =  [...elfCalories.values()].sort((a,b)=> b-a)[0];
+   const threeLargest = [...elfCalories.values()].sort((a,b)=> b-a).slice(0, 3);
+   const threeLargestSum = threeLargest.reduce((accumulator, currentValue) => accumulator + currentValue,0);
    return [largest, threeLargestSum];
 }

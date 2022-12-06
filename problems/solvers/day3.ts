@@ -9,16 +9,10 @@ for(let i = 0; i < prioritiesBase.length; i++){
     itemPriorityMap.set(prioritiesBase[i].toUpperCase(), (i+1)  + prioritiesBase.length)
 }
 
-//console.log(itemPriorityMap)
-
 const returnCommonPriority = (rucksack: string): [string, number] =>{
     const halfIndex = (rucksack.length /2)
     const compartment1 = rucksack.slice(0, halfIndex)
     const compartment2 = rucksack.slice(halfIndex, rucksack.length)
-
-    console.log('1: ' + compartment1)
-    console.log('2: ' + compartment2)
-    console.log('---')
 
     let sharedChar: string = ' '
     for (let i = 0; i < compartment1.length; i++) {
@@ -58,7 +52,6 @@ export const pt1 = (filePath: string): number =>{
     let round= 0;
     for (let line of flatArray) {
         let ruckSack = returnCommonPriority(line)
-        console.log(`rucksack ${round} commonItem: ` + ruckSack[0] +  `, priority ${ruckSack[1]}`)
         prioritySum += ruckSack[1];
         round++;
     }
@@ -77,7 +70,6 @@ export const pt2 = (filePath: string): number =>{
     for (let line of flatArray) {
         if(round%3===0){
             let ruckSack = returnCommonPriorityPart2(flatArray[round], flatArray[round+1], flatArray[round+2])
-            console.log(`rucksack ${round} commonItem: ` + ruckSack[0] +  `, priority ${ruckSack[1]}`)
             prioritySum += ruckSack[1];
         }
         round++;

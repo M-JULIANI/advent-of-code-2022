@@ -17,16 +17,8 @@ export const pt1 = (filePath: string) =>{
         let range2Min = Number(numericalRange2[0])
         let range2Max = Number(numericalRange2[1])
 
-        if(range1Min >= range2Min && range1Max<=range2Max) {
-            count++;
-            console.log('CONTAINED')
-        }
-        else if(range1Min <=range2Min && range1Max>=range2Max) {
-            count++;
-            console.log('CONTAINED')
-        }
-
-        console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text)
+        if(range1Min >= range2Min && range1Max<=range2Max) count++;
+        else if(range1Min <=range2Min && range1Max>=range2Max) count++;
     }
 
     console.log('fully contained count: '  + count)
@@ -49,26 +41,10 @@ export const pt2 = (filePath: string) =>{
         let range2Min = Number(numericalRange2[0])
         let range2Max = Number(numericalRange2[1])
 
-        if(range1Min <= range2Min&& range1Max<=range2Max && range1Max>= range2Min) {
-            count++;
-            console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text + ', OVERLAPS')
-        }
-        else if(range2Min <= range1Min&& range2Max<=range1Max  && range2Max>= range1Min) {
-            count++;
-            console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text + ', OVERLAPS')
-        }
-        else if(range1Min >= range2Min && range1Max<=range2Max) {
-            count++;
-            console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text + ', CONTAINED')
-        }
-        else if(range1Min <=range2Min && range1Max>=range2Max) {
-            count++;
-            console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text + ', CONTAINED')
-        }
-        else  console.log('round ' + i + ', range1: ' + range1Text + ', ' + 'range2: '+ range2Text)
-
-
-
+        if(range1Min <= range2Min&& range1Max<=range2Max && range1Max>= range2Min) count++;
+        else if(range2Min <= range1Min&& range2Max<=range1Max  && range2Max>= range1Min) count++;
+        else if(range1Min >= range2Min && range1Max<=range2Max) count++;
+        else if(range1Min <=range2Min && range1Max>=range2Max) count++;
     }
 
     console.log('overlap count: '  + count)

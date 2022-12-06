@@ -50,7 +50,6 @@ export const pt1 = (filePath: string): number => {
     let round= 0;
     for (let line of flatArray) {
         let roundScore = computeRound(line)
-        console.log(`round ${round} score: ` + roundScore[0] +  `, my instrument ${roundScore[1]}, ` + `, opponent instrument: ${roundScore[2]}`)
         totalscore += roundScore[0];
         round++;
     }
@@ -92,11 +91,8 @@ export const pt2 = (filePath: string): number => {
 
     let round= 0;
     for (let line of flatArray) {
-        let requireOutcome = computeRound(line);
         let requiredInstrument = computeRequiredInstrumentToAchieveOutcome(line)
-        //actual round score
         let roundScore = computeRound(line, requiredInstrument);
-        console.log(`round ${round}, requiredOutcome: ${requireOutcome[1]},  score: ` + roundScore[0] +  `, my instrument ${requiredInstrument}` + `, opponent instrument: ${roundScore[2]}`)
         totalscore += roundScore[0];
         round++;
     }

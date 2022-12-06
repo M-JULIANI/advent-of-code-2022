@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import { arrayBuffer } from 'stream/consumers';
 
 interface IStack<T> {
     push(item: T): void;
@@ -46,7 +45,7 @@ class Stack<T> implements IStack<T> {
      stacks[8] = new Stack(['N', 'C', 'R'])
      return stacks
   }
-export const computeTopOfCrates = (filePath: string, stacks: Stack<string>[]) =>{
+export const pt1 = (filePath: string, stacks: Stack<string>[]) =>{
     var instructionText = fs.readFileSync(filePath).toString().split("\n");
     for (let line of instructionText) {
         if(!line.startsWith('m')) continue;
@@ -69,7 +68,7 @@ export const computeTopOfCrates = (filePath: string, stacks: Stack<string>[]) =>
 }
 
 //part2
-export const computeTopOfCratesPart2 = (filePath: string, stacks: Stack<string>[]) => {
+export const pt2 = (filePath: string, stacks: Stack<string>[]) => {
     var instructionText = fs.readFileSync(filePath).toString().split("\n");
     for (let line of instructionText) {
         if (!line.startsWith('m')) continue;

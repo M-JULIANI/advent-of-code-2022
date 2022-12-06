@@ -23,6 +23,6 @@ const {computeTopOfCrates, computeTopOfCratesPart2, initializeStacks} = require(
 // let totalPriority = getRangeAnyOverlap(rangeIds)
 
 //day 5 crates
-const stacksData = './problems/data/day5-crates.txt'
+const stacksData = './problems/data/day5.txt'
 const stacks = initializeStacks()
 const toc = computeTopOfCratesPart2(stacksData, stacks)

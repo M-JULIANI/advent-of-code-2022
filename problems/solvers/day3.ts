@@ -50,7 +50,7 @@ const returnCommonPriorityPart2 = (rucksack: string, ruckSack2: string, ruckSack
     return sharedChar != null ? [sharedChar, itemPriorityMap.get(sharedChar)?? 0]: ['none', 0]
 }
 
-export const computePrioritiesSum = (filePath: string): number =>{
+export const pt1 = (filePath: string): number =>{
 
     var flatArray = fs.readFileSync(filePath).toString().split("\n");
     let prioritySum: number= 0;
@@ -68,7 +68,7 @@ export const computePrioritiesSum = (filePath: string): number =>{
     return prioritySum;
 }
 
-export const computePrioritiesSumPar2 = (filePath: string): number =>{
+export const pt2 = (filePath: string): number =>{
 
     var flatArray = fs.readFileSync(filePath).toString().split("\n");
     let prioritySum: number= 0;

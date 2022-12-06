@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 
-export const getRangeCountOfFullyContainedRanges = (filePath: string) =>{
+export const pt1 = (filePath: string) =>{
     var allPairs = fs.readFileSync(filePath).toString().split("\n");
 
     let count = 0;
@@ -33,7 +33,7 @@ export const getRangeCountOfFullyContainedRanges = (filePath: string) =>{
 
 }
 
-export const getRangeAnyOverlap = (filePath: string) =>{
+export const pt2 = (filePath: string) =>{
     var allPairs = fs.readFileSync(filePath).toString().split("\n");
 
     let count = 0;

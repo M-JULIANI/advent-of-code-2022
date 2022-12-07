@@ -25,7 +25,8 @@ class Node {
         return this.children.find(x=> x.name === nodeName) ?? null;
     }
 }
-export const pt1 = (f: string) =>{
+
+const seedNode = (f: string)=>{
     var lines = fs.readFileSync(f).toString().split("\n");
     let rootNode = new Node('/', false);
     let currentNode = rootNode;
@@ -55,12 +56,27 @@ export const pt1 = (f: string) =>{
             currentNode.addChild(new Node(split[1], true, Number(split[0])));
         }
     }
-
-    let sum = { sum: 0 }
     seedAllOtherLeaves(rootNode);
+    return rootNode;
+}
+export const pt1 = (f: string) =>{
+   let rootNode = seedNode(f);
+   let sum = { sum: 0 }
     computeSumOfDirectories(rootNode, 100000, sum)
     console.log(`total sum ${sum.sum}`);
 }
+
+export const pt2 = (f: string) =>{
+    let rootNode = seedNode(f);
+    let sum = { sum: 0 }
+    let array: number[] = [];
+
+    let target = 30000000 - (70000000 - rootNode.size);
+     computeSumOfDirectoriesP2(rootNode, target, array, sum)
+     let sorted = array.sort((a,b)=> b-a);
+     sorted.forEach(x=> console.log(x))
+     console.log('sum is: ' + sum.sum)
+ }
 
 const seedAllOtherLeaves = (n: Node)=>{
     let current = n;
@@ -94,3 +110,14 @@ const computeSumOfDirectories = (n: Node, target: number, totalSum: { sum: numbe
     }
     n.children.forEach(x => computeSumOfDirectories(x, target, totalSum))
 }       
+
+const computeSumOfDirectoriesP2 = (n: Node, target: number, array: number[], totalSum: { sum: number }) => {
+
+    const sum = n.children.map(x => x.size).reduce((sum, current) => sum + current, 0)
+   if (sum> 0 && sum>=target) {
+        totalSum.sum += sum;
+        array.push(sum)
+        console.log(`node: ${n.name}, sum: ${sum}, is larger than ${target}`)
+   }
+    n.children.forEach(x => computeSumOfDirectoriesP2(x, target, array, totalSum))
+}  

@@ -72,10 +72,10 @@ export const pt2 = (f: string) =>{
     let array: number[] = [];
 
     let target = 30000000 - (70000000 - rootNode.size);
+    console.log('target')
+    console.log(target)
      computeSumOfDirectoriesP2(rootNode, target, array, sum)
-     let sorted = array.sort((a,b)=> b-a);
-     sorted.forEach(x=> console.log(x))
-     console.log('sum is: ' + sum.sum)
+     return array.sort((a,b)=> a-b)[0];
  }
 
 const seedAllOtherLeaves = (n: Node)=>{

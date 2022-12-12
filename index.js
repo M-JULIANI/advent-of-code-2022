@@ -1,6 +1,6 @@
 
-const {pt1} = require('./problems/solvers/day10')
+const {pt1, pt2} = require('./problems/solvers/day10')
 const data = './problems/data/day10.txt'
 
-const run = pt1(data)
+const run = pt2(data)
 console.log(`solution ${run}`)

@@ -1,4 +1,4 @@
-export const makeMatrix = <T>(m: number, n: number, value: T | (() => T)) => {
+export const makeMatrix = <T>(m: T, n: T, value: T | (() => T)) => {
     const out = [] as T[][];
     for (let j = 0; j < n; ++j) {
       out[j] = [];

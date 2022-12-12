@@ -1,7 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.formatStringMatrix = exports.formatString = void 0;
+exports.formatNumberMatrix = exports.formatNumber = exports.formatStringMatrix = exports.formatString = void 0;
 var formatString = function (x) { return '' + x; };
 exports.formatString = formatString;
 var formatStringMatrix = function (m) { return m.map(function (r) { return r.map(exports.formatString).join(' '); }).join("\n"); };
 exports.formatStringMatrix = formatStringMatrix;
+var formatNumber = function (x) { return '' + x; };
+exports.formatNumber = formatNumber;
+var formatNumberMatrix = function (m) { return m.map(function (r) { return r.map(exports.formatNumber).join(' '); }).join("\n"); };
+exports.formatNumberMatrix = formatNumberMatrix;

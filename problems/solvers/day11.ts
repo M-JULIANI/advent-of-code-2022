@@ -60,12 +60,13 @@ class Monkey{
            if(item == null) break;
            this.inspectCount++;
            item = this.operation(item!);
-           item = item %lcm; //use modulo to reduce number
+           item = item %lcm; //use modulo to reduce number, lcm in this case is multiplication of all numbers
+           //as they are all prime
            let monkeyToGiveTo = this.actualTest(item); //proceed to actual test
            this.monkeys[monkeyToGiveTo].addItem(item);
         }
     }
-}
+} 
 
 const getOperator = (s: string[], num: number) =>{
 

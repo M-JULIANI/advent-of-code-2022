@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-
+ 
 class Monkey{
 
     index: number =-1;
@@ -46,16 +46,23 @@ class Monkey{
            let item =  this.dequee();
            if(item == null) break;
            this.inspectCount++;
-        //   console.log('item : ' + item)
            item = this.operation(item!);
-        //   console.log('operated item : ' + item)
            item = Math.floor(item/3);
-        //   console.log('minus worry / 3: ' + item)
            let monkeyToGiveTo = this.actualTest(item);
-           //console.log('giveto: ' + monkeyToGiveTo)
-         //  console.log('m: ' + this.monkeys[monkeyToGiveTo].items)
            this.monkeys[monkeyToGiveTo].addItem(item);
-         //  console.log('m after: ' + this.monkeys[monkeyToGiveTo].items)
+        }
+    }
+
+    
+    runCycle2(lcm: number){
+        while(this.items.length>0){
+           let item =  this.dequee();
+           if(item == null) break;
+           this.inspectCount++;
+           item = this.operation(item!);
+           item = item %lcm; //use modulo to reduce number
+           let monkeyToGiveTo = this.actualTest(item); //proceed to actual test
+           this.monkeys[monkeyToGiveTo].addItem(item);
         }
     }
 }
@@ -92,15 +99,6 @@ const processMonkeys = (lines: string[]):Monkey[]=>{
             const divisibleBy = Number(lines[i+3].match(numberPattern));
             const trueCon = Number(lines[i+4].match(numberPattern));
             const falseCon = Number(lines[i+5].match(numberPattern));
-
-            // console.log('items: ' + items)
-            // console.log('number: ' + number)
-            // console.log('operatorstring: ' + operatorString)
-            // console.log('operator: ' + operator)
-            // console.log('div by: ' + divisibleBy)
-            // console.log('truecon: ' + trueCon)
-            // console.log('falsecon: ' + falseCon)
-            // console.log('---')
             const test = ((n: number)=> n %divisibleBy ===0 ? trueCon : falseCon);
 
             const monkey = new Monkey(count, items, operator, test)
@@ -115,24 +113,80 @@ const processMonkeys = (lines: string[]):Monkey[]=>{
     return monkeys;
 }
 
+const processMonkeys2 = (lines: string[]):[Monkey[], number]=>{
+    //get divisors
+    let divisors = [] as number[];
+    for (let i = 0; i < lines.length; i += 7) {
+        var numberPattern = /\d+/g;
+        const divisibleBy = Number(lines[i + 3].match(numberPattern));
+        divisors.push(divisibleBy)
+    }
+    //product
+    let commonProduct = divisors.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+
+    let count = 0;
+    let monkeys: Monkey[] = [] as Monkey[];
+    for(let i=0; i<lines.length; i+=7){
+
+     //   if(i%5===0){
+            var numberPattern = /\d+/g;
+            const items = lines[i+1].split(':')[1].split(',').map(x=> Number(x))
+            const split =  lines[i+2].split(' ')
+            const number = Number(split[7]) ?? 0;
+            const operatorString= split[6];
+            const numberString = split[7];
+            const operator = getOperator([operatorString, numberString],number);
+            const divisibleBy = Number(lines[i+3].match(numberPattern));
+            const trueCon = Number(lines[i+4].match(numberPattern));
+            const falseCon = Number(lines[i+5].match(numberPattern));
+
+            const test = ((n: number)=> n%divisibleBy===0? trueCon : falseCon);
+
+            const monkey = new Monkey(count, items, operator, test)
+            monkeys.push(monkey);
+            count++;
+    }
+
+    for(let m of monkeys){
+        m.monkeys = monkeys;
+    }
+
+    return [monkeys, commonProduct];
+}
+
 export const pt1 = (f: string)=>{
     var lines = fs.readFileSync(f).toString().split("\n");
     const monkeys = processMonkeys(lines)
 
-    for(let i = 0; i <20; i++){
+    for(let i = 0; i <1000; i++){
         for(let monkey of monkeys){
             monkey.runCycle();
         }
     }
-
-    monkeys.forEach(x=>{
-        console.log(`m ${x.index}, carrying ${x.items}`)
-    })
-
     let sorted = monkeys.sort((a, b)=> b.inspectCount - a.inspectCount);
-    sorted.forEach(x=>{
+    monkeys.forEach(x=>{
         console.log(`monkey ${x.index}, count: ${x.inspectCount}`)
     });
 
+    console.log(`monkey biz: ` + (sorted[0].inspectCount * sorted[1].inspectCount))
+}
+
+
+export const pt2 = (f: string)=>{
+    var lines = fs.readFileSync(f).toString().split("\n");
+    let processed = processMonkeys2(lines)
+    const monkeys = processed[0]
+    const lcm = processed[1];
+
+    for(let i = 0; i <10000; i++){
+        for(let monkey of monkeys){
+            monkey.runCycle2(lcm);
+        }
+    }
+
+    let sorted = monkeys.slice().sort((a, b)=> b.inspectCount - a.inspectCount);
+    monkeys.forEach(x=>{
+        console.log(`monkey ${x.index}, count: ${x.inspectCount}`)
+    });
     console.log(`monkey biz: ` + (sorted[0].inspectCount * sorted[1].inspectCount))
 }

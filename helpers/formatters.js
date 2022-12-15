@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.formatNumberMatrix = exports.formatNumber = exports.formatStringMatrix = exports.formatString = void 0;
-var formatString = function (x) { return '' + x; };
+var formatString = function (x) { return '' + x.padStart(2, '0'); };
 exports.formatString = formatString;
 var formatStringMatrix = function (m) { return m.map(function (r) { return r.map(exports.formatString).join(' '); }).join("\n"); };
 exports.formatStringMatrix = formatStringMatrix;

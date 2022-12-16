@@ -1,5 +1,4 @@
 import * as fs from 'fs'
-import { format } from 'path';
 
 
 const checkOrderPair = (left: Array<number> | number, right: Array<Number> | number, validOrder: {valid: boolean | null}) => {

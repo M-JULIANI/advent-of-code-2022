@@ -44,16 +44,32 @@ export const pt1 = (f: string)=>{
             let xNext = path[p+1][0]
             let yNext = path[p+1][1]
 
-            if(xNext === xCurrent){
-                for(let y = yCurrent; y<yNext; y++){
-                    if(yCurrent< minY) minY = yCurrent;
-                    if(yCurrent> maxY) maxY = yCurrent;
+            if (xNext === xCurrent) {
+                if (yCurrent < yNext) {
+                    for (let y = yCurrent; y < yNext; y++) {
+                        if (yCurrent < minY) minY = yCurrent;
+                        if (yCurrent > maxY) maxY = yCurrent;
+                    }
+                }
+                else{
+                    for (let y = yCurrent; y > yNext; y--) {
+                        if (yCurrent < minY) minY = yCurrent;
+                        if (yCurrent > maxY) maxY = yCurrent;
+                    }
                 }
             }
             else{
-                for(let x = xCurrent; x>xNext; x--){
-                        if(xCurrent< minX) minX = xCurrent;
-                        if(xCurrent> maxX) maxX = xCurrent;
+                if (xCurrent > xNext) {
+                    for (let x = xCurrent; x > xNext; x--) {
+                        if (xCurrent < minX) minX = xCurrent;
+                        if (xCurrent > maxX) maxX = xCurrent;
+                    }
+                }
+               else{
+                    for (let x = xCurrent; x < xNext; x++) {
+                        if (xCurrent < minX) minX = xCurrent;
+                        if (xCurrent > maxX) maxX = xCurrent;
+                    }
                 }
             }
         }
@@ -77,7 +93,6 @@ export const pt1 = (f: string)=>{
  
              const currentCell = new Cell(xCurrent, yCurrent, true);
              map.set(vecToString(currentCell.pos), currentCell);
-            // console.log('current: ' + currentCell.pos)
  
              if(p === path.length-1) return;
  
@@ -87,26 +102,37 @@ export const pt1 = (f: string)=>{
              yNext = map_range(yNext, minY, maxY, 0, maxY - minY);
  
              if(xNext === xCurrent){
-                 for(let y = yCurrent; y<yNext; y++){
-                     const cell = new Cell(xCurrent, y, true)
-                     map.set(vecToString(cell.pos), cell);
-                 }
+                if (yCurrent < yNext) {
+                    for (let y = yCurrent; y < yNext; y++) {
+                        const cell = new Cell(xCurrent, y, true)
+                        map.set(vecToString(cell.pos), cell);
+                    }
+                }
+                else{
+                    for (let y = yCurrent; y > yNext; y--) {
+                        const cell = new Cell(xCurrent, y, true)
+                        map.set(vecToString(cell.pos), cell);
+                    }
+                }
              }
-             else{
-                 for(let x = xCurrent; x>xNext; x--){
+             else {
+                 if (xCurrent > xNext) {
+                     for (let x = xCurrent; x > xNext; x--) {
                          const cell = new Cell(x, yCurrent, true)
                          map.set(vecToString(cell.pos), cell);
+                     }
+                 }
+                 else {
+                     for (let x = xCurrent; x < xNext; x++) {
+                        const cell = new Cell(x, yCurrent, true)
+                        map.set(vecToString(cell.pos), cell);
+                     }
                  }
              }
          }
      })
-
-    //console.log(map)
-  //  console.log('remapped: ')
     
-  //  const rexmin = map_range(minX, minX, maxX, maxX - minX,)
   let matrix = makeMatrix(maxX - minX+1, maxY - minY+1, 0);
-//   console.log(maxX-minX, maxY - minY)
 
   for(let x = 0; x< matrix.length; x++){
     for(let y= 0; y< matrix[0].length; y++){
@@ -139,13 +165,8 @@ export const pt1 = (f: string)=>{
         let lastCurrent = currentCell;
         while (true) {
             currentCell = currentCell.getMove(map)
-           // console.log('current cell')
-           // console.log('updated')
-            //console.log(currentCell)
             if(currentCell === undefined) return true; //if it went out of bounds
             if (currentCell == null) break; //if cannot move any more
-            // console.log('current cell')
-            // console.log(currentCell.pos)
             lastCurrent = currentCell;
         }
 
@@ -160,23 +181,13 @@ export const pt1 = (f: string)=>{
         y: map_range(start.y, minY, maxY, 0, maxY - minY)
     } as Vec2;
     startCell = new Cell(start.x, start.y, false);
-
-   //console.log('start')
-   //console.log(startCell.pos)
-
    let iteration = 0;
     while (true) {
         if(moveSand(startCell, map))break;
         iteration++;
     }
 
-//console.log(matrix);
 redraw(matrix, map);
 console.log('iteration: ' + iteration)
-
-
-
-
-   // console.log(rockPaths)
 
 }

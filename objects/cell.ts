@@ -30,9 +30,7 @@ export class Cell{
 
         for(let i =0; i<3; i++){
             const possibleNeighbor = {x: this.pos.x + movement[i][0], y: this.pos.y + movement[i][1]} as Vec2
-           //  console.log(possibleNeighbor)
             const neighborInMap = map.get(vecToString(possibleNeighbor))
-          //  console.log(neighborInMap)
             if(neighborInMap == null ) return undefined;
             if(neighborInMap.occupied) continue;
 

@@ -72,17 +72,22 @@ var Cell = /** @class */ (function () {
         return null;
     };
     Cell.prototype.markMapAsOccupied = function (map, manhattan) {
+        var updatedX;
+        var updatedY;
+        var pos;
+        var mapped;
+        var cell;
         for (var i = 0; i <= manhattan; i++) {
             for (var j = manhattan; j >= 0; j--) {
                 for (var k = -1; k <= 1; k++) {
                     for (var h = -1; h <= 1; h++) {
                         if (Math.abs(i * h) + Math.abs(j * k) <= manhattan) {
-                            var updatedX = this.pos.x + (j * k);
-                            var updatedY = this.pos.y + (i * h);
-                            var pos = { x: updatedX, y: updatedY };
-                            var mapped = map.get((0, objects_1.vecToString)(pos));
+                            updatedX = this.pos.x + (j * k);
+                            updatedY = this.pos.y + (i * h);
+                            pos = { x: updatedX, y: updatedY };
+                            mapped = map.get((0, objects_1.vecToString)(pos));
                             if (mapped === undefined) {
-                                var cell = new Cell(pos.x, pos.y, true);
+                                cell = new Cell(pos.x, pos.y, true);
                                 cell.setType(1);
                                 map.set((0, objects_1.vecToString)(cell.pos), cell);
                             }

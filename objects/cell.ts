@@ -85,17 +85,22 @@ export class Cell{
     }
 
     markMapAsOccupied(map: Map<string, Cell>, manhattan: number){
+        let updatedX: number;
+        let updatedY:number;
+        let pos:Vec2;
+        let mapped: Cell | undefined;
+        let cell: Cell;
         for(let i =0; i<= manhattan; i++){
             for(let j = manhattan ; j>= 0 ;j--){
                 for(let k = -1; k<=1; k++){
                     for(let h = -1; h<=1; h++){
                         if(Math.abs(i* h) + Math.abs(j*k)<= manhattan){
-                            let updatedX = this.pos.x + (j* k);
-                            let updatedY = this.pos.y + (i* h);
-                            let pos = {x: updatedX, y: updatedY} as Vec2;
-                            let mapped = map.get(vecToString(pos));
+                            updatedX = this.pos.x + (j* k);
+                            updatedY = this.pos.y + (i* h);
+                            pos = {x: updatedX, y: updatedY} as Vec2;
+                            mapped = map.get(vecToString(pos));
                             if(mapped === undefined){
-                                let cell = new Cell(pos.x, pos.y, true);
+                                cell = new Cell(pos.x, pos.y, true);
                                 cell.setType(1);
                                 map.set(vecToString(cell.pos), cell);
                             }

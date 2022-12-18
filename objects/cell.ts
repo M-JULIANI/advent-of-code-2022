@@ -6,6 +6,7 @@ export class Cell{
     j: number;
 
     pos: Vec2;
+    type: number = 0;
 
     occupied: boolean = false;
 
@@ -14,6 +15,10 @@ export class Cell{
         this.j = j;
         this.pos = {x: i, y: j} as Vec2;
         this.occupied = occupied;
+    }
+
+    setType(n: number) {
+        this.type = n;
     }
 
     flip(){
@@ -77,6 +82,29 @@ export class Cell{
         }
 
         return null;
+    }
+
+    markMapAsOccupied(map: Map<string, Cell>, manhattan: number){
+        for(let i =0; i<= manhattan; i++){
+            for(let j = manhattan ; j>= 0 ;j--){
+                for(let k = -1; k<=1; k++){
+                    for(let h = -1; h<=1; h++){
+                        if(Math.abs(i* h) + Math.abs(j*k)<= manhattan){
+                            let updatedX = this.pos.x + (j* k);
+                            let updatedY = this.pos.y + (i* h);
+                            let pos = {x: updatedX, y: updatedY} as Vec2;
+                            let mapped = map.get(vecToString(pos));
+                            if(mapped === undefined){
+                                let cell = new Cell(pos.x, pos.y, true);
+                                cell.setType(1);
+                                map.set(vecToString(cell.pos), cell);
+                            }
+                        }
+                    
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -1,2 +1,4 @@
 /node_modules
 /problems/solvers/**.js
+/helpers/**.js
+/objects/**.js

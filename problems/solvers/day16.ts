@@ -1,5 +1,7 @@
 import * as fs from 'fs'
 
+//credit to https://www.youtube.com/watch?v=YSDzaEi-xsA for the help
+
   interface ValveInfo {
     [key: string]: Valve;
  }

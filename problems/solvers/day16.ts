@@ -44,17 +44,11 @@ const parseGraph = (f: string) => {
         };
     });
 
-    //console.log(objects)
-
     const graph: ValveInfo = {};
     objects.forEach((x) => graph[x.valve] = x);
-    // console.log(graph)
-
     for (const node of objects) {
         bfs(graph, node);
     }
-    //console.log('post bfs:')
-    //console.log(graph)
     return graph;
 }
 
@@ -62,9 +56,9 @@ const parseGraph = (f: string) => {
 function bfs(graph: ValveInfo, root: Valve) {
     const queue: Valve[] = [];
     root.paths = {};
+    queue.push(root);
     const explored = new Set();
     explored.add(root.valve);
-    queue.push(root);
 
     while (queue.length > 0) {
         const current = queue.shift();

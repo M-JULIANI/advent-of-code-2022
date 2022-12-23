@@ -25,13 +25,13 @@ interface ValveInFlight {
     openValves: FlowInfo
 }
 
-const parseGraph = (f:string)=> {
+const parseGraph = (f: string) => {
     const lines = fs.readFileSync(f, { encoding: 'utf-8' })
-    .trim()
-    .split("\n");
-    
+        .trim()
+        .split("\n");
+
     const regexp =
-  /^Valve (?<valve>[A-Z]{2}) has flow rate=(?<flow>\d+); tunnels? leads? to valves? (?<otherValves>.*)$/;
+        /^Valve (?<valve>[A-Z]{2}) has flow rate=(?<flow>\d+); tunnels? leads? to valves? (?<otherValves>.*)$/;
 
     const objects = lines.map((line) => {
         const data = line.match(regexp)?.groups;
@@ -48,7 +48,7 @@ const parseGraph = (f:string)=> {
 
     const graph: ValveInfo = {};
     objects.forEach((x) => graph[x.valve] = x);
-   // console.log(graph)
+    // console.log(graph)
 
     for (const node of objects) {
         bfs(graph, node);
@@ -124,8 +124,8 @@ export const pt1=(f:string)=>{
           }
         }
         for (const { valve } of options) {
-          // Move AND open the valve
-          const steps = graph[current.valve].paths[valve] + 1;
+          // Move AND open the valve 
+          const steps = graph[current.valve].paths[valve] + 1; // steps to get to target value
           //termination condition
           if (current.time - steps <= 0) {
             const ending =
@@ -137,7 +137,7 @@ export const pt1=(f:string)=>{
             queue.push({
               valve: valve,
               time: current.time - steps,
-              flow: current.flow + steps * addFlow(graph, current.openValves),
+              flow: current.flow + (steps * addFlow(graph, current.openValves)),
               openValves: { ...current.openValves, [valve]: current.time - steps },
             });
           }

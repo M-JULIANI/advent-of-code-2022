@@ -1,5 +1,5 @@
 
-const {pt1, pt2} = require('./problems/solvers/day15')
-const data = './problems/data/day15.txt'
+const {pt1, pt2} = require('./problems/solvers/day16')
+const data = './problems/data/day16.txt'
 
-const run = pt2(data)
+const run = pt1(data)

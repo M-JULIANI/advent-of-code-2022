@@ -1,25 +1,30 @@
 Arguments: 
-  /Users/marcojuliani/.nvm/versions/node/v12.22.12/bin/node /usr/local/bin/yarn run
+  /Users/marcojuliani/.nvm/versions/node/v10.24.1/bin/node /usr/local/bin/yarn add @lodash
 
 PATH: 
-  /Users/marcojuliani/.nvm/versions/node/v12.22.12/bin:/Users/marcojuliani/google-cloud-sdk/bin:/Users/marcojuliani/.gvm/bin:/Users/marcojuliani/.nvm/versions/node/v10.24.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/marcojuliani/google-cloud-sdk/bin:/Users/marcojuliani/.gvm/bin:/Users/marcojuliani/.nvm/versions/node/v10.24.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/marcojuliani/go/bin:/Users/marcojuliani/go/bin:/bin
+  /Users/marcojuliani/google-cloud-sdk/bin:/Users/marcojuliani/.gvm/bin:/Users/marcojuliani/.nvm/versions/node/v10.24.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/marcojuliani/google-cloud-sdk/bin:/Users/marcojuliani/.gvm/bin:/Users/marcojuliani/.nvm/versions/node/v10.24.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/marcojuliani/go/bin:/Users/marcojuliani/go/bin:/bin
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  12.22.12
+  10.24.1
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/marcojuliani/advent-of-code-2022/package.json: Unexpected token { in JSON at position 221
-      at JSON.parse (<anonymous>)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/@lodash: Request "https://registry.yarnpkg.com/@lodash" returned a 405
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66154:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1145:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
@@ -29,11 +34,13 @@ npm manifest:
     "author": "Marco Juliani <marco@outerlabs.io>",
     "license": "MIT",
     "devDependencies": {
-      "@types/node": "^18.11.10"
+      "@types/node": "^18.11.10",
+      "typescript": "^4.9.3"
     },
-    "scripts:" {
-      "run": "yarn tsc --build --clean"
-    }
+    "scripts": {
+      "dev": "yarn run tsc && node index.js"
+    },
+    "dependencies": {}
   }
 
 yarn manifest: 
@@ -48,3 +55,8 @@ Lockfile:
     version "18.11.10"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.10.tgz#4c64759f3c2343b7e6c4b9caf761c7a3a05cee34"
     integrity sha512-juG3RWMBOqcOuXC643OAdSA525V44cVgGV6dUDuiFtss+8Fk5x1hI93Rsld43VeJVIeqlP9I7Fn9/qaVqoEAuQ==
+  
+  typescript@^4.9.3:
+    version "4.9.3"
+    resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.3.tgz#3aea307c1746b8c384435d8ac36b8a2e580d85db"
+    integrity sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==

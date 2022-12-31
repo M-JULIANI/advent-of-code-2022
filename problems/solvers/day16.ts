@@ -1,6 +1,5 @@
 import * as fs from 'fs'
-import { stringify } from 'querystring';
-import { isBuffer } from 'util';
+import * as ld from 'lodash'
 
 //credit to https://www.youtube.com/watch?v=YSDzaEi-xsA for the help
 
@@ -108,53 +107,46 @@ function bfs(graph: ValveInfo, root: Valve) {
     }
 }
 
-function dfs(graph: ValveInfo, time: number, root: Valve, bitmask: number, tapsOpen: Set<string>, visited:Set<string> , globalSet: Set<string>, step: number): number{
+function dfs(graph: ValveInfo, time: number, root: Valve, bitmask: number, tapsOpen: Set<string>, globalSet: Set<string>, step: number): number{
  // const key = toString({time: time, valve: root, bitmask: bitmask} as unknown as TupleInfo)
   step++;
   let op: string[] = []
-  tapsOpen.forEach(x=> op.push(x))
+  const tabsOpenCopy: Set<string> = ld.cloneDeep(tapsOpen);
+  tabsOpenCopy.forEach(x=> op.push(x))
 
   console.log("step: ".padStart(step, '-') + step + ', valve: ' + root.valve + ', time: ' + time + ', opened: ' + (op.length>0? op.join(',') : 'none'))
   let maxVal = 0;
-  let validNeighbors = graph[root.valve].otherValves.slice().filter(x => !tapsOpen.has(x));
+  let validNeighbors = ld.cloneDeep(graph[root.valve].otherValves).filter(x => !tabsOpenCopy.has(x));
   
-  if (validNeighbors.length === 0) validNeighbors = graph[root.valve].otherValves;
-  if (globalSet.size === tapsOpen.size) return maxVal;
-  
+  if (validNeighbors.length === 0) validNeighbors = ld.cloneDeep(graph[root.valve].otherValves);
+  if (globalSet.size === tabsOpenCopy.size) return maxVal;
+
   for(let n = 0; n < validNeighbors.length; n++){ 
     let remainingTime = time - graph[root.valve].paths[validNeighbors[n]];
     if(remainingTime ===0) console.log('remaining time: ' + remainingTime)
     if (remainingTime <= 0) continue;
 
-    let opened = false;
-    if (!tapsOpen.has(graph[validNeighbors[n]].valve)) {
-      if (n === validNeighbors.length - 1) {
-        tapsOpen.add(validNeighbors[n]);
-        remainingTime -= 1;
-        opened = true;
-      }
-      else {
-        const greaterThanOtherNeighbor = (graph[validNeighbors[n + 1]].flow < graph[validNeighbors[n]].flow)
-        const otherNeighborCOntained = !tapsOpen.has(graph[validNeighbors[n + 1]].valve)
-        const biggerThanCurrent =  (graph[validNeighbors[n]].flow > graph[root.valve].flow)
-        if(greaterThanOtherNeighbor && otherNeighborCOntained){
-          tapsOpen.add(validNeighbors[n]);
+    let sum = 0;
+    if (graph[validNeighbors[n]].flow === 0) {
+      //continue;
+    }
+    else {
+      for (let o = 0; o < 2; o++) {
+        const open = o === 0;
+        if (open) {
+
           remainingTime -= 1;
-          opened = true;
+          sum = (graph[validNeighbors[n]].flow * remainingTime);
+          tabsOpenCopy.add(validNeighbors[n])
         }
-        else if(biggerThanCurrent){
-          tapsOpen.add(validNeighbors[n]);
-          remainingTime -= 1;
-          opened = true;
-        }
+        if(remainingTime ===0) console.log('remaining time: ' + remainingTime)
+        if (remainingTime <= 0) continue;
+
+        maxVal = Math.max(maxVal, dfs(graph, remainingTime, graph[validNeighbors[n]], bitmask, tabsOpenCopy, globalSet, step) + sum)
       }
     }
-    let sum = 0;
-    if(opened) sum = (graph[validNeighbors[n]].flow * remainingTime);
 
-    visited.add(validNeighbors[n])
- 
-    maxVal = Math.max(maxVal, dfs(graph, remainingTime, graph[validNeighbors[n]], bitmask, tapsOpen, visited, globalSet, step) + sum)
+      maxVal = Math.max(maxVal, dfs(graph, remainingTime, graph[validNeighbors[n]], bitmask, tabsOpenCopy, globalSet, step) + sum)
   }
   return maxVal;
 }
@@ -236,16 +228,8 @@ export const pt2=(f:string)=>{
 
  // console.log(graph);
   let cache = {} as TupleStore;
-//   const queue: ValveInFlight[] = [];
-  // const root = {
-  //   valve: "AA",
-  //   time,
-  //   flow: 0,
-  //   openValves: {} as  FlowInfo
-  // };
   const root = graph['AA']
-  const visited: Set<string> = new Set<string>();
-  //visited.push('AA')
+
 
   const nonEmpty: string[]= [];
  for(let key in graph){
@@ -265,7 +249,7 @@ export const pt2=(f:string)=>{
 
  let tapsOpen = new Set<string>();
   //console.log(root)
-let sum = dfs(graph, time, root, 0, tapsOpen, visited, globalSet, 0)
+let sum = dfs(graph, time, root, 0, tapsOpen, globalSet, 0)
 
 console.log('sum: ' + sum)
 }
